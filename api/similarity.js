@@ -2,7 +2,7 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
     return res.status(200).json({
       ok: true,
-      message: "Linxicon API is alive"
+      message: "Linxicon API is alive. Send POST with word1 and word2."
     });
   }
 
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     });
   }
 
-  const { word1, word2 } = req.body;
+  const { word1, word2 } = req.body || {};
 
   if (!word1 || !word2) {
     return res.status(400).json({
@@ -40,10 +40,13 @@ export default async function handler(req, res) {
   const data = await response.json();
 
   if (!response.ok) {
-    return res.status(response.status).json(data);
+    return res.status(response.status).json({
+      error: "Hugging Face error",
+      details: data
+    });
   }
 
-  const similarity = data[0];
+  const similarity = Array.isArray(data) ? data[0] : data;
 
   return res.status(200).json({
     word1,
