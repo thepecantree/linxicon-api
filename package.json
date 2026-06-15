@@ -1,10 +1,5 @@
 {
   "name": "linxicon-api",
   "version": "1.0.0",
-  "dependencies": {
-    "@vercel/node": "latest"
-  },
-  "devDependencies": {
-    "typescript": "latest"
-  }
+  "type": "module"
 }
